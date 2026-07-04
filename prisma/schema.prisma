@@ -1,0 +1,177 @@
+// Prisma schema for מערכת תוכניות עבודה לקמפיינים
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model WorkPlan {
+  id        String   @id @default(cuid())
+  clientName String
+  goal       String // monthly | sales_day
+  startDate  DateTime
+  endDate    DateTime
+  totalBudget Float
+  status     String   @default("draft") // draft | completed
+
+  facebookGeneralNotes String?
+  googleNotes          String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  facebookCampaigns FacebookCampaign[]
+  tiktokCampaigns   TikTokCampaign[]
+  smsItems          SmsItem[]
+  mailingItems      MailingItem[]
+}
+
+model FacebookCampaign {
+  id           String   @id @default(cuid())
+  workPlanId   String
+  workPlan     WorkPlan @relation(fields: [workPlanId], references: [id], onDelete: Cascade)
+  name         String
+  dailyBudget  Float
+  budgetLevel  String // campaign | adset
+  startAt      DateTime
+  endAt        DateTime
+  type         String // engagement | conversions | awareness | traffic
+  notes        String?
+  order        Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  adsets FacebookAdset[]
+
+  @@index([workPlanId])
+}
+
+model FacebookAdset {
+  id              String   @id @default(cuid())
+  campaignId      String
+  campaign        FacebookCampaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  audienceName    String
+  dailyBudget     Float?
+  hasAgeRange     Boolean  @default(false)
+  ageRange        String?
+  locationType    String // all_israel | custom
+  locationDetails String?
+  notes           String?
+  order           Int      @default(0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  ads FacebookAd[]
+
+  @@index([campaignId])
+}
+
+model FacebookAd {
+  id           String   @id @default(cuid())
+  adsetId      String
+  adset        FacebookAdset @relation(fields: [adsetId], references: [id], onDelete: Cascade)
+  adType       String // dark | existing_post
+  copy         String?
+  headline     String?
+  graphicLink  String?
+  postLink     String?
+  link         String?
+  notes        String?
+  order        Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([adsetId])
+}
+
+model TikTokCampaign {
+  id             String   @id @default(cuid())
+  workPlanId     String
+  workPlan       WorkPlan @relation(fields: [workPlanId], references: [id], onDelete: Cascade)
+  name           String
+  type           String   @default("views")
+  dailyBudgetUsd Float
+  notes          String?
+  order          Int      @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  adsets TikTokAdset[]
+
+  @@index([workPlanId])
+}
+
+model TikTokAdset {
+  id              String   @id @default(cuid())
+  campaignId      String
+  campaign        TikTokCampaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  audienceName    String
+  hasAgeRange     Boolean  @default(false)
+  ageRange        String?
+  locationType    String // all_israel | custom
+  locationDetails String?
+  notes           String?
+  order           Int      @default(0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  ads TikTokAd[]
+
+  @@index([campaignId])
+}
+
+model TikTokAd {
+  id           String   @id @default(cuid())
+  adsetId      String
+  adset        TikTokAdset @relation(fields: [adsetId], references: [id], onDelete: Cascade)
+  adType       String // dark | existing_post
+  copy         String?
+  headline     String?
+  graphicLink  String?
+  postLink     String?
+  link         String?
+  notes        String?
+  order        Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([adsetId])
+}
+
+model SmsItem {
+  id                String   @id @default(cuid())
+  workPlanId        String
+  workPlan          WorkPlan @relation(fields: [workPlanId], references: [id], onDelete: Cascade)
+  title             String?
+  copy              String?
+  audience          String?
+  sendAt            DateTime
+  hasBurningCoupons Boolean  @default(false)
+  sheetsLink        String?
+  order             Int      @default(0)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([workPlanId])
+}
+
+model MailingItem {
+  id         String   @id @default(cuid())
+  workPlanId String
+  workPlan   WorkPlan @relation(fields: [workPlanId], references: [id], onDelete: Cascade)
+  title      String?
+  copy       String?
+  audience   String?
+  imageLink  String?
+  link       String?
+  sendAt     DateTime
+  order      Int      @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([workPlanId])
+}
