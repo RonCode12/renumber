@@ -144,7 +144,7 @@ export function AdsetCard({
         ref={setNodeRef}
         className={clsx(
           "mt-4 space-y-3 rounded-xl border-2 border-dashed p-3 transition",
-          isOver ? "border-sky-300 bg-sky-50/50" : "border-transparent"
+          isOver ? "border-amber-300 bg-amber-50/50" : "border-transparent"
         )}
       >
         <p className="px-1 text-xs font-semibold text-slate-400">מודעות ({adset.ads.length})</p>

@@ -26,7 +26,7 @@ export function ErrorText({ children }: { children?: string }) {
 }
 
 const inputBase =
-  "w-full rounded-lg border bg-white px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition focus:ring-2 focus:ring-sky-300 focus:border-sky-400";
+  "w-full rounded-lg border bg-white px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition focus:ring-2 focus:ring-amber-300 focus:border-amber-400";
 
 function borderClass(error?: boolean) {
   return error ? "border-red-400" : "border-slate-200";
@@ -200,8 +200,8 @@ export function RadioGroup({
               className={clsx(
                 "rounded-full border px-4 py-2 text-sm font-medium transition",
                 active
-                  ? "border-sky-400 bg-sky-50 text-sky-700 ring-2 ring-sky-200"
-                  : "border-slate-200 bg-white text-slate-600 hover:border-sky-200 hover:bg-sky-50/50"
+                  ? "border-amber-400 bg-amber-50 text-amber-700 ring-2 ring-amber-200"
+                  : "border-slate-200 bg-white text-slate-600 hover:border-amber-200 hover:bg-amber-50/50"
               )}
             >
               {opt.label}
@@ -222,7 +222,7 @@ interface ButtonProps
 export function Button({ variant = "primary", className, ...props }: ButtonProps) {
   const variants: Record<string, string> = {
     primary:
-      "bg-sky-500 text-white hover:bg-sky-600 shadow-sm shadow-sky-200 disabled:bg-slate-300",
+      "bg-amber-500 text-white hover:bg-amber-600 shadow-sm shadow-amber-200 disabled:bg-slate-300",
     secondary:
       "bg-white text-slate-700 border border-slate-200 hover:bg-slate-50",
     danger: "bg-white text-red-500 border border-red-200 hover:bg-red-50",

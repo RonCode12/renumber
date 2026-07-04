@@ -213,7 +213,7 @@ function SummarySection({
     <Card>
       <div className="mb-4 flex items-center justify-between">
         <h3 className="text-base font-bold text-slate-800">{title}</h3>
-        <Link href={editHref} className="text-xs font-semibold text-sky-600 hover:underline">
+        <Link href={editHref} className="text-xs font-semibold text-amber-600 hover:underline">
           עריכה
         </Link>
       </div>

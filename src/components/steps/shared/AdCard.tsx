@@ -59,7 +59,7 @@ export function AdCard({
           <button
             type="button"
             onClick={onDuplicate}
-            className="rounded-md px-2 py-1 text-xs font-semibold text-sky-600 hover:bg-sky-50"
+            className="rounded-md px-2 py-1 text-xs font-semibold text-amber-600 hover:bg-amber-50"
           >
             שכפול
           </button>
