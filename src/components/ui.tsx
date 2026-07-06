@@ -26,7 +26,7 @@ export function ErrorText({ children }: { children?: string }) {
 }
 
 const inputBase =
-  "w-full rounded-xl border bg-white px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition-shadow duration-150 focus:ring-4 focus:ring-amber-100 focus:border-amber-400";
+  "w-full rounded-xl border bg-white px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition-shadow duration-150 focus:ring-4 focus:ring-sky-100 focus:border-sky-400";
 
 function borderClass(error?: boolean) {
   return error ? "border-red-300" : "border-slate-200";
@@ -200,8 +200,8 @@ export function RadioGroup({
               className={clsx(
                 "rounded-full border px-4 py-2 text-sm font-medium transition-all",
                 active
-                  ? "border-amber-400 bg-amber-400 text-slate-900 shadow-sm shadow-amber-200"
-                  : "border-slate-200 bg-white text-slate-600 hover:border-amber-300 hover:bg-amber-50/60"
+                  ? "border-sky-400 bg-sky-500 text-white shadow-sm shadow-sky-200"
+                  : "border-slate-200 bg-white text-slate-600 hover:border-sky-300 hover:bg-sky-50/60"
               )}
             >
               {opt.label}
@@ -216,15 +216,17 @@ export function RadioGroup({
 
 interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary" | "danger" | "ghost";
+  variant?: "primary" | "secondary" | "success" | "danger" | "ghost";
 }
 
 export function Button({ variant = "primary", className, ...props }: ButtonProps) {
   const variants: Record<string, string> = {
     primary:
-      "bg-amber-400 text-slate-900 hover:bg-amber-500 shadow-md shadow-amber-200/70 hover:shadow-lg hover:shadow-amber-200 active:scale-[0.98] disabled:bg-slate-200 disabled:shadow-none disabled:text-slate-400",
+      "bg-sky-500 text-white hover:bg-sky-600 shadow-md shadow-sky-200/70 hover:shadow-lg hover:shadow-sky-200 active:scale-[0.98] disabled:bg-slate-200 disabled:shadow-none disabled:text-slate-400",
     secondary:
       "bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 hover:border-slate-300 active:scale-[0.98]",
+    success:
+      "bg-emerald-500 text-white hover:bg-emerald-600 shadow-md shadow-emerald-200/70 hover:shadow-lg hover:shadow-emerald-200 active:scale-[0.98] disabled:bg-slate-200 disabled:shadow-none disabled:text-slate-400",
     danger: "bg-white text-red-500 border border-red-200 hover:bg-red-50 active:scale-[0.98]",
     ghost: "text-slate-500 hover:bg-slate-100 active:scale-[0.98]",
   };
@@ -267,9 +269,12 @@ export function PageHeader({
   subtitle?: string;
 }) {
   return (
-    <div className="mb-6">
-      <h1 className="text-[1.6rem] font-extrabold tracking-tight text-slate-800">{title}</h1>
-      {subtitle && <p className="mt-1.5 text-sm text-slate-500">{subtitle}</p>}
+    <div className="mb-6 flex gap-3">
+      <span className="mt-1 w-1 shrink-0 rounded-full bg-sky-400" />
+      <div>
+        <h1 className="text-[1.6rem] font-extrabold tracking-tight text-slate-800">{title}</h1>
+        {subtitle && <p className="mt-1.5 text-sm text-slate-500">{subtitle}</p>}
+      </div>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { generalSchema } from "@/lib/validation";
+import { nextStatusAfterSave } from "@/lib/status";
 
 type Params = { params: Promise<{ id: string }> };
 
@@ -53,15 +54,21 @@ export async function PATCH(request: Request, { params }: Params) {
   if (!parsed.success) {
     return NextResponse.json({ error: parsed.error.flatten() }, { status: 400 });
   }
-  const { clientName, goal, startDate, endDate, totalBudget } = parsed.data;
+  const { name, clientName, goal, startDate, endDate, totalBudget } = parsed.data;
+  const current = await prisma.workPlan.findUniqueOrThrow({
+    where: { id },
+    select: { status: true },
+  });
   const workPlan = await prisma.workPlan.update({
     where: { id },
     data: {
+      name,
       clientName,
       goal,
       startDate: new Date(startDate),
       endDate: new Date(endDate),
       totalBudget,
+      status: nextStatusAfterSave(current.status),
     },
   });
   return NextResponse.json(workPlan);

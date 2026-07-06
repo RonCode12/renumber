@@ -53,10 +53,10 @@ export function AdsetCard({
   }
 
   return (
-    <div className="rounded-2xl border border-amber-200/60 bg-amber-50/30 p-5">
+    <div className="rounded-2xl border border-emerald-200/70 bg-emerald-50/30 p-5">
       <div className="mb-3 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-amber-200 text-[11px] font-bold text-amber-900">
+          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-200 text-[11px] font-bold text-emerald-900">
             {index + 1}
           </span>
           <span className="text-sm font-bold text-slate-700">אדסט</span>
@@ -149,7 +149,7 @@ export function AdsetCard({
         ref={setNodeRef}
         className={clsx(
           "mt-4 space-y-3 rounded-xl border-2 border-dashed p-3 transition-colors",
-          isOver ? "border-amber-400 bg-amber-100/40" : "border-amber-200/70"
+          isOver ? "border-amber-400 bg-amber-100/40" : "border-amber-200/60 bg-amber-50/20"
         )}
       >
         <p className="px-1 text-xs font-semibold text-amber-700/70">מודעות ({adset.ads.length})</p>

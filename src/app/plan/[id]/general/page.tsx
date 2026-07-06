@@ -19,6 +19,7 @@ export default async function GeneralStepPage({
       <GeneralForm
         planId={id}
         initial={{
+          name: plan.name,
           clientName: plan.clientName,
           goal: plan.goal as Goal,
           startDate: toDateInput(plan.startDate),

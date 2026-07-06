@@ -38,8 +38,8 @@ export function AdCard({
       ref={setNodeRef}
       style={{ transform: CSS.Translate.toString(transform) }}
       className={clsx(
-        "rounded-xl border border-slate-200 bg-white p-4 transition-shadow",
-        isDragging ? "opacity-40" : "hover:shadow-sm"
+        "rounded-xl border border-amber-200/70 bg-white p-4 transition-shadow",
+        isDragging ? "opacity-40" : "hover:shadow-sm hover:border-amber-300"
       )}
     >
       <div className="mb-3 flex items-center justify-between">
@@ -53,7 +53,7 @@ export function AdCard({
           >
             ⠿
           </button>
-          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-slate-100 text-[11px] font-bold text-slate-500">
+          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-amber-100 text-[11px] font-bold text-amber-700">
             {index + 1}
           </span>
           <span className="text-sm font-bold text-slate-600">מודעה</span>

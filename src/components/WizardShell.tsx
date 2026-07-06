@@ -40,16 +40,16 @@ export function WizardShell({
               <span
                 className={clsx(
                   "flex items-center gap-2 rounded-full border px-3.5 py-2 text-xs font-semibold transition sm:text-sm",
-                  isCurrent && "border-amber-400 bg-amber-400 text-slate-900 shadow-sm shadow-amber-200",
-                  !isCurrent && isDone && "border-amber-200 bg-amber-50 text-amber-700 hover:border-amber-300",
+                  isCurrent && "border-sky-400 bg-sky-500 text-white shadow-sm shadow-sky-200",
+                  !isCurrent && isDone && "border-emerald-200 bg-emerald-50 text-emerald-700 hover:border-emerald-300",
                   !isCurrent && !isDone && "border-slate-200 bg-white text-slate-400"
                 )}
               >
                 <span
                   className={clsx(
                     "flex h-5 w-5 items-center justify-center rounded-full text-[11px]",
-                    isCurrent && "bg-white/40",
-                    !isCurrent && isDone && "bg-amber-200 text-amber-800",
+                    isCurrent && "bg-white/25",
+                    !isCurrent && isDone && "bg-emerald-200 text-emerald-800",
                     !isCurrent && !isDone && "bg-slate-100"
                   )}
                 >
@@ -64,7 +64,7 @@ export function WizardShell({
                   <span
                     className={clsx(
                       "mx-1 h-px w-3 sm:w-5",
-                      i <= currentIndex ? "bg-amber-300" : "bg-slate-200"
+                      i <= currentIndex ? "bg-sky-300" : "bg-slate-200"
                     )}
                   />
                 )}

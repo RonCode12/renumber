@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import type { Prisma } from "@/generated/prisma/client";
 import { facebookPayloadSchema } from "@/lib/validation";
+import { nextStatusAfterSave } from "@/lib/status";
 
 type Params = { params: Promise<{ id: string }> };
 
@@ -15,9 +16,10 @@ export async function PUT(request: Request, { params }: Params) {
   const { facebookGeneralNotes, campaigns } = parsed.data;
 
   await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
+    const current = await tx.workPlan.findUniqueOrThrow({ where: { id }, select: { status: true } });
     await tx.workPlan.update({
       where: { id },
-      data: { facebookGeneralNotes },
+      data: { facebookGeneralNotes, status: nextStatusAfterSave(current.status) },
     });
     await tx.facebookCampaign.deleteMany({ where: { workPlanId: id } });
     for (const campaign of campaigns) {

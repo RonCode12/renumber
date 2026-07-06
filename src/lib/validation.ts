@@ -2,11 +2,17 @@ import { z } from "zod";
 import { TIKTOK_MIN_DAILY_BUDGET_USD } from "@/lib/types";
 
 export const generalSchema = z.object({
+  name: z.string().min(1),
   clientName: z.string().min(1),
   goal: z.enum(["monthly", "sales_day"]),
   startDate: z.string().min(1),
   endDate: z.string().min(1),
   totalBudget: z.number().positive(),
+});
+
+export const adminPayloadSchema = z.object({
+  status: z.string().min(1).optional(),
+  adminNotes: z.string().optional(),
 });
 
 const adSchema = z

@@ -110,14 +110,16 @@ export interface MailingItemData {
 
 export interface WorkPlanData {
   id: string;
+  name: string;
   clientName: string;
   goal: Goal | "";
   startDate: string;
   endDate: string;
   totalBudget: number | null;
-  status: "draft" | "completed";
+  status: string;
   facebookGeneralNotes: string;
   googleNotes: string;
+  adminNotes: string;
   facebookCampaigns: FacebookCampaignData[];
   tiktokCampaigns: TikTokCampaignData[];
   smsItems: SmsItemData[];

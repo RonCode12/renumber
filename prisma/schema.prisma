@@ -11,15 +11,18 @@ datasource db {
 
 model WorkPlan {
   id        String   @id @default(cuid())
+  name       String   @default("")
   clientName String
   goal       String // monthly | sales_day
   startDate  DateTime
   endDate    DateTime
   totalBudget Float
-  status     String   @default("draft") // draft | completed
+  // draft | submitted | updated | in_progress | missing_info | ready_to_build | built | done
+  status     String   @default("draft")
 
   facebookGeneralNotes String?
   googleNotes          String?
+  adminNotes           String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

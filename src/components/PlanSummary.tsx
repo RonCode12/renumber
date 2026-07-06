@@ -32,6 +32,7 @@ export function PlanSummary({ plan }: { plan: FullWorkPlanRow }) {
     <div className="space-y-6">
       <SummarySection title="פרטים כלליים" editHref={`/plan/${plan.id}/general`}>
         <dl className="grid grid-cols-1 gap-3 text-sm sm:grid-cols-2">
+          <Row label="שם תוכנית העבודה" value={plan.name || "—"} />
           <Row label="לקוח" value={plan.clientName} />
           <Row label="מטרה" value={GOAL_LABELS[plan.goal as Goal]} />
           <Row label="תאריכים" value={`${fmt(plan.startDate)} – ${fmt(plan.endDate)}`} />
@@ -178,7 +179,7 @@ function SummarySection({
     <Card>
       <div className="mb-4 flex items-center justify-between">
         <h3 className="text-base font-bold text-slate-800">{title}</h3>
-        <Link href={editHref} className="text-xs font-semibold text-amber-700 hover:underline">
+        <Link href={editHref} className="text-xs font-semibold text-sky-600 hover:underline">
           עריכה
         </Link>
       </div>

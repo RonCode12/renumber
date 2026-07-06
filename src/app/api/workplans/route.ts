@@ -15,9 +15,10 @@ export async function POST(request: Request) {
   if (!parsed.success) {
     return NextResponse.json({ error: parsed.error.flatten() }, { status: 400 });
   }
-  const { clientName, goal, startDate, endDate, totalBudget } = parsed.data;
+  const { name, clientName, goal, startDate, endDate, totalBudget } = parsed.data;
   const workPlan = await prisma.workPlan.create({
     data: {
+      name,
       clientName,
       goal,
       startDate: new Date(startDate),

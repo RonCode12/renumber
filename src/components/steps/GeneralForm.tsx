@@ -6,6 +6,7 @@ import { Button, Card, NumberField, PageHeader, RadioGroup, SelectField, TextFie
 import { GOAL_LABELS, type Goal } from "@/lib/types";
 
 interface GeneralFormValue {
+  name: string;
   clientName: string;
   goal: Goal | "";
   startDate: string;
@@ -22,6 +23,7 @@ export function GeneralForm({
 }) {
   const router = useRouter();
   const [value, setValue] = useState<GeneralFormValue>({
+    name: initial?.name ?? "",
     clientName: initial?.clientName ?? "בייביסטאר",
     goal: initial?.goal ?? "",
     startDate: initial?.startDate ?? "",
@@ -33,6 +35,7 @@ export function GeneralForm({
 
   function validate(): boolean {
     const next: Record<string, string> = {};
+    if (!value.name) next.name = "שדה חובה";
     if (!value.clientName) next.clientName = "שדה חובה";
     if (!value.goal) next.goal = "שדה חובה";
     if (!value.startDate) next.startDate = "שדה חובה";
@@ -76,6 +79,15 @@ export function GeneralForm({
     <div>
       <PageHeader title="פרטים כלליים לתוכנית העבודה" />
       <Card className="space-y-5">
+        <TextField
+          label="שם תוכנית העבודה"
+          required
+          placeholder="לדוגמה: תוכנית עבודה בייביסטאר חודש 07"
+          value={value.name}
+          onChange={(e) => setValue((s) => ({ ...s, name: e.target.value }))}
+          error={errors.name}
+        />
+
         <SelectField
           label="שם לקוח"
           required

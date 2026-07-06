@@ -1,21 +1,19 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { googlePayloadSchema } from "@/lib/validation";
-import { nextStatusAfterSave } from "@/lib/status";
+import { adminPayloadSchema } from "@/lib/validation";
 
 type Params = { params: Promise<{ id: string }> };
 
-export async function PUT(request: Request, { params }: Params) {
+export async function PATCH(request: Request, { params }: Params) {
   const { id } = await params;
   const body = await request.json();
-  const parsed = googlePayloadSchema.safeParse(body);
+  const parsed = adminPayloadSchema.safeParse(body);
   if (!parsed.success) {
     return NextResponse.json({ error: parsed.error.flatten() }, { status: 400 });
   }
-  const current = await prisma.workPlan.findUniqueOrThrow({ where: { id }, select: { status: true } });
   const workPlan = await prisma.workPlan.update({
     where: { id },
-    data: { googleNotes: parsed.data.googleNotes, status: nextStatusAfterSave(current.status) },
+    data: parsed.data,
   });
   return NextResponse.json(workPlan);
 }
