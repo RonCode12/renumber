@@ -40,9 +40,16 @@ export function TikTokCampaignCard({
   const adsetErrors: Record<number, unknown> = errors?.adsets ?? {};
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+    <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_1px_2px_rgba(15,23,42,0.04),0_8px_24px_-12px_rgba(15,23,42,0.08)]">
+      <div className="h-1.5 bg-gradient-to-l from-amber-400 to-amber-300" />
+      <div className="p-6">
       <div className="mb-4 flex items-center justify-between">
-        <h3 className="text-base font-bold text-slate-800">קמפיין {index + 1}</h3>
+        <div className="flex items-center gap-2.5">
+          <span className="flex h-7 w-7 items-center justify-center rounded-full bg-slate-800 text-xs font-bold text-white">
+            {index + 1}
+          </span>
+          <h3 className="text-base font-bold text-slate-800">קמפיין</h3>
+        </div>
         {canRemove && (
           <button
             type="button"
@@ -107,6 +114,7 @@ export function TikTokCampaignCard({
         <Button variant="secondary" onClick={addAdset}>
           + הוסף אדסט
         </Button>
+      </div>
       </div>
     </div>
   );

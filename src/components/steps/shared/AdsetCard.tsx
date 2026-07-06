@@ -53,21 +53,26 @@ export function AdsetCard({
   }
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5">
+    <div className="rounded-2xl border border-amber-200/60 bg-amber-50/30 p-5">
       <div className="mb-3 flex items-center justify-between">
-        <span className="text-sm font-bold text-slate-700">אדסט {index + 1}</span>
+        <div className="flex items-center gap-2">
+          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-amber-200 text-[11px] font-bold text-amber-900">
+            {index + 1}
+          </span>
+          <span className="text-sm font-bold text-slate-700">אדסט</span>
+        </div>
         {canRemove && (
           <button
             type="button"
             onClick={onRemove}
-            className="rounded-md px-2 py-1 text-xs font-semibold text-red-400 hover:bg-red-50"
+            className="rounded-md px-2.5 py-1 text-xs font-semibold text-red-400 hover:bg-red-50"
           >
             הסרת אדסט
           </button>
         )}
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-4 rounded-xl bg-white p-4">
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <TextField
             label="שם קהל"
@@ -143,11 +148,11 @@ export function AdsetCard({
       <div
         ref={setNodeRef}
         className={clsx(
-          "mt-4 space-y-3 rounded-xl border-2 border-dashed p-3 transition",
-          isOver ? "border-amber-300 bg-amber-50/50" : "border-transparent"
+          "mt-4 space-y-3 rounded-xl border-2 border-dashed p-3 transition-colors",
+          isOver ? "border-amber-400 bg-amber-100/40" : "border-amber-200/70"
         )}
       >
-        <p className="px-1 text-xs font-semibold text-slate-400">מודעות ({adset.ads.length})</p>
+        <p className="px-1 text-xs font-semibold text-amber-700/70">מודעות ({adset.ads.length})</p>
         {adset.ads.map((ad, i) => (
           <AdCard
             key={ad.id}

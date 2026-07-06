@@ -1,5 +1,6 @@
 import type {
   WorkPlanModel,
+  WorkPlanGetPayload,
   FacebookCampaignGetPayload,
   FacebookAdsetGetPayload,
   FacebookAdModel,
@@ -30,4 +31,31 @@ export type TikTokAdsetRow = TikTokAdsetGetPayload<{
 
 export type TikTokCampaignRow = TikTokCampaignGetPayload<{
   include: { adsets: { include: { ads: true } } };
+}>;
+
+export const fullWorkPlanInclude = {
+  facebookCampaigns: {
+    orderBy: { order: "asc" as const },
+    include: {
+      adsets: {
+        orderBy: { order: "asc" as const },
+        include: { ads: { orderBy: { order: "asc" as const } } },
+      },
+    },
+  },
+  tiktokCampaigns: {
+    orderBy: { order: "asc" as const },
+    include: {
+      adsets: {
+        orderBy: { order: "asc" as const },
+        include: { ads: { orderBy: { order: "asc" as const } } },
+      },
+    },
+  },
+  smsItems: { orderBy: { order: "asc" as const } },
+  mailingItems: { orderBy: { order: "asc" as const } },
+};
+
+export type FullWorkPlanRow = WorkPlanGetPayload<{
+  include: typeof fullWorkPlanInclude;
 }>;

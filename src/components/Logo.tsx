@@ -1,20 +1,19 @@
-import clsx from "clsx";
+import Image from "next/image";
+
+const HEIGHTS = { sm: 28, md: 36, lg: 48 } as const;
+const ASPECT_RATIO = 808 / 271;
 
 export function Logo({ size = "md" }: { size?: "sm" | "md" | "lg" }) {
-  const textSize = size === "lg" ? "text-3xl" : size === "sm" ? "text-lg" : "text-2xl";
-  const tagSize = size === "lg" ? "text-xs" : "text-[10px]";
+  const height = HEIGHTS[size];
+  const width = Math.round(height * ASPECT_RATIO);
 
   return (
-    <div className="flex flex-col items-start" dir="ltr">
-      <span
-        className={clsx("font-extrabold leading-none tracking-tight text-slate-900", textSize)}
-        style={{ fontFamily: "var(--font-baloo)" }}
-      >
-        renumber
-      </span>
-      <span className={clsx("font-semibold uppercase tracking-[0.2em] text-slate-400", tagSize)}>
-        Marketing Agency
-      </span>
-    </div>
+    <Image
+      src="/logo.png"
+      alt="Renumber Marketing Agency"
+      width={width}
+      height={height}
+      priority
+    />
   );
 }

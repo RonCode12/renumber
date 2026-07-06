@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f7f9fc;
+  --background: #fbf9f6;
   --foreground: #1e293b;
 }
 
@@ -12,10 +12,15 @@
 }
 
 body {
-  background: var(--background);
+  background:
+    radial-gradient(circle at 100% 0%, rgba(251, 191, 36, 0.08), transparent 45%),
+    radial-gradient(circle at 0% 100%, rgba(251, 191, 36, 0.05), transparent 40%),
+    var(--background);
   color: var(--foreground);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 * {
-  scrollbar-color: #cbd5e1 transparent;
+  scrollbar-color: #d6d0c7 transparent;
 }

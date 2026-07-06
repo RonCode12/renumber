@@ -1,28 +1,20 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { isValidSessionToken, SESSION_COOKIE_NAME } from "@/lib/authToken";
 
-const USER = process.env.BASIC_AUTH_USER ?? "renumber";
-const PASSWORD = process.env.BASIC_AUTH_PASSWORD ?? "medias";
-
-export function proxy(request: NextRequest) {
-  const authHeader = request.headers.get("authorization");
-
-  if (authHeader?.startsWith("Basic ")) {
-    const decoded = atob(authHeader.slice("Basic ".length));
-    const separatorIndex = decoded.indexOf(":");
-    const user = decoded.slice(0, separatorIndex);
-    const password = decoded.slice(separatorIndex + 1);
-    if (user === USER && password === PASSWORD) {
-      return NextResponse.next();
-    }
+export async function proxy(request: NextRequest) {
+  const token = request.cookies.get(SESSION_COOKIE_NAME)?.value;
+  if (await isValidSessionToken(token)) {
+    return NextResponse.next();
   }
 
-  return new NextResponse("Authentication required", {
-    status: 401,
-    headers: { "WWW-Authenticate": 'Basic realm="Renumber", charset="UTF-8"' },
-  });
+  const loginUrl = new URL("/login", request.url);
+  loginUrl.searchParams.set("next", request.nextUrl.pathname + request.nextUrl.search);
+  return NextResponse.redirect(loginUrl);
 }
 
 export const config = {
-  matcher: "/((?!_next/static|_next/image|favicon.ico).*)",
+  matcher: [
+    "/((?!login|api/login|_next/static|_next/image|favicon.ico|logo.png).*)",
+  ],
 };

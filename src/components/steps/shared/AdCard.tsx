@@ -38,8 +38,8 @@ export function AdCard({
       ref={setNodeRef}
       style={{ transform: CSS.Translate.toString(transform) }}
       className={clsx(
-        "rounded-xl border border-slate-200 bg-slate-50/60 p-4",
-        isDragging && "opacity-40"
+        "rounded-xl border border-slate-200 bg-white p-4 transition-shadow",
+        isDragging ? "opacity-40" : "hover:shadow-sm"
       )}
     >
       <div className="mb-3 flex items-center justify-between">
@@ -49,17 +49,20 @@ export function AdCard({
             {...listeners}
             type="button"
             title="גררו כדי להעביר לאדסט אחר"
-            className="cursor-grab rounded-md p-1.5 text-slate-400 hover:bg-slate-200 active:cursor-grabbing"
+            className="cursor-grab rounded-md p-1.5 text-slate-400 hover:bg-slate-100 active:cursor-grabbing"
           >
             ⠿
           </button>
-          <span className="text-sm font-bold text-slate-600">מודעה {index + 1}</span>
+          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-slate-100 text-[11px] font-bold text-slate-500">
+            {index + 1}
+          </span>
+          <span className="text-sm font-bold text-slate-600">מודעה</span>
         </div>
         <div className="flex gap-1">
           <button
             type="button"
             onClick={onDuplicate}
-            className="rounded-md px-2 py-1 text-xs font-semibold text-amber-600 hover:bg-amber-50"
+            className="rounded-md px-2.5 py-1 text-xs font-semibold text-amber-700 hover:bg-amber-50"
           >
             שכפול
           </button>
@@ -67,7 +70,7 @@ export function AdCard({
             <button
               type="button"
               onClick={onRemove}
-              className="rounded-md px-2 py-1 text-xs font-semibold text-red-400 hover:bg-red-50"
+              className="rounded-md px-2.5 py-1 text-xs font-semibold text-red-400 hover:bg-red-50"
             >
               הסרה
             </button>

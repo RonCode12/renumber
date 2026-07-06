@@ -13,7 +13,7 @@ export function FieldLabel({
   required?: boolean;
 }) {
   return (
-    <label className="block text-sm font-semibold text-slate-700 mb-1.5">
+    <label className="block text-[13px] font-semibold text-slate-600 mb-1.5">
       {children}
       {required && <RequiredStar />}
     </label>
@@ -22,14 +22,14 @@ export function FieldLabel({
 
 export function ErrorText({ children }: { children?: string }) {
   if (!children) return null;
-  return <p className="text-xs text-red-500 mt-1">{children}</p>;
+  return <p className="text-xs font-medium text-red-500 mt-1">{children}</p>;
 }
 
 const inputBase =
-  "w-full rounded-lg border bg-white px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition focus:ring-2 focus:ring-amber-300 focus:border-amber-400";
+  "w-full rounded-xl border bg-white px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition-shadow duration-150 focus:ring-4 focus:ring-amber-100 focus:border-amber-400";
 
 function borderClass(error?: boolean) {
-  return error ? "border-red-400" : "border-slate-200";
+  return error ? "border-red-300" : "border-slate-200";
 }
 
 interface TextFieldProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -67,7 +67,7 @@ export function TextAreaField({
       {label && <FieldLabel required={required}>{label}</FieldLabel>}
       <textarea
         rows={rows}
-        className={clsx(inputBase, borderClass(!!error), "resize-y", className)}
+        className={clsx(inputBase, borderClass(!!error), "resize-y leading-relaxed", className)}
         {...props}
       />
       <ErrorText>{error}</ErrorText>
@@ -105,7 +105,7 @@ export function NumberField({
         <input
           type="number"
           inputMode="decimal"
-          className={clsx(inputBase, borderClass(!!error), suffix && "pl-10")}
+          className={clsx(inputBase, borderClass(!!error), suffix && "pl-11")}
           value={value ?? ""}
           min={min}
           step={step ?? "any"}
@@ -116,7 +116,7 @@ export function NumberField({
           }}
         />
         {suffix && (
-          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-slate-400">
+          <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-xs font-semibold text-slate-400">
             {suffix}
           </span>
         )}
@@ -198,10 +198,10 @@ export function RadioGroup({
               key={opt.value}
               onClick={() => onChange(opt.value)}
               className={clsx(
-                "rounded-full border px-4 py-2 text-sm font-medium transition",
+                "rounded-full border px-4 py-2 text-sm font-medium transition-all",
                 active
-                  ? "border-amber-400 bg-amber-50 text-amber-700 ring-2 ring-amber-200"
-                  : "border-slate-200 bg-white text-slate-600 hover:border-amber-200 hover:bg-amber-50/50"
+                  ? "border-amber-400 bg-amber-400 text-slate-900 shadow-sm shadow-amber-200"
+                  : "border-slate-200 bg-white text-slate-600 hover:border-amber-300 hover:bg-amber-50/60"
               )}
             >
               {opt.label}
@@ -222,16 +222,16 @@ interface ButtonProps
 export function Button({ variant = "primary", className, ...props }: ButtonProps) {
   const variants: Record<string, string> = {
     primary:
-      "bg-amber-500 text-white hover:bg-amber-600 shadow-sm shadow-amber-200 disabled:bg-slate-300",
+      "bg-amber-400 text-slate-900 hover:bg-amber-500 shadow-md shadow-amber-200/70 hover:shadow-lg hover:shadow-amber-200 active:scale-[0.98] disabled:bg-slate-200 disabled:shadow-none disabled:text-slate-400",
     secondary:
-      "bg-white text-slate-700 border border-slate-200 hover:bg-slate-50",
-    danger: "bg-white text-red-500 border border-red-200 hover:bg-red-50",
-    ghost: "text-slate-500 hover:bg-slate-100",
+      "bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 hover:border-slate-300 active:scale-[0.98]",
+    danger: "bg-white text-red-500 border border-red-200 hover:bg-red-50 active:scale-[0.98]",
+    ghost: "text-slate-500 hover:bg-slate-100 active:scale-[0.98]",
   };
   return (
     <button
       className={clsx(
-        "rounded-lg px-4 py-2.5 text-sm font-semibold transition disabled:cursor-not-allowed disabled:opacity-60",
+        "rounded-xl px-4 py-2.5 text-sm font-bold transition-all duration-150 disabled:cursor-not-allowed disabled:active:scale-100",
         variants[variant],
         className
       )}
@@ -250,7 +250,7 @@ export function Card({
   return (
     <div
       className={clsx(
-        "rounded-2xl border border-slate-200 bg-white p-6 shadow-sm",
+        "rounded-2xl border border-slate-200/80 bg-white p-6 shadow-[0_1px_2px_rgba(15,23,42,0.04),0_8px_24px_-12px_rgba(15,23,42,0.08)]",
         className
       )}
     >
@@ -268,8 +268,8 @@ export function PageHeader({
 }) {
   return (
     <div className="mb-6">
-      <h1 className="text-2xl font-bold text-slate-800">{title}</h1>
-      {subtitle && <p className="mt-1 text-sm text-slate-500">{subtitle}</p>}
+      <h1 className="text-[1.6rem] font-extrabold tracking-tight text-slate-800">{title}</h1>
+      {subtitle && <p className="mt-1.5 text-sm text-slate-500">{subtitle}</p>}
     </div>
   );
 }

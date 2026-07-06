@@ -16,8 +16,11 @@ export default async function HomePage() {
   return (
     <div className="min-h-full">
       <header className="border-b border-slate-200/70 bg-white/70 backdrop-blur">
-        <div className="mx-auto max-w-4xl px-4 py-5 sm:px-6">
+        <div className="mx-auto flex max-w-4xl items-center justify-between px-4 py-5 sm:px-6">
           <Logo size="md" />
+          <Link href="/admin" className="text-sm font-semibold text-slate-500 hover:text-slate-800">
+            אזור ניהול
+          </Link>
         </div>
       </header>
 
