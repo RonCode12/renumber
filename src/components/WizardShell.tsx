@@ -31,7 +31,7 @@ export function WizardShell({
       </header>
 
       <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6">
-        <ol className="mb-8 flex flex-wrap items-center gap-x-1 gap-y-2">
+        <ol className="-mx-4 mb-8 flex items-center gap-x-1 overflow-x-auto px-4 pb-2 sm:mx-0 sm:flex-wrap sm:gap-y-2 sm:overflow-visible sm:px-0 sm:pb-0">
           {WIZARD_STEPS.map((step, i) => {
             const reachable = planId !== null;
             const isCurrent = step.key === current;
@@ -39,7 +39,7 @@ export function WizardShell({
             const content = (
               <span
                 className={clsx(
-                  "flex items-center gap-2 rounded-full border px-3.5 py-2 text-xs font-semibold transition sm:text-sm",
+                  "flex shrink-0 items-center gap-2 rounded-full border px-3.5 py-2 text-xs font-semibold transition sm:text-sm",
                   isCurrent && "border-sky-400 bg-sky-500 text-white shadow-sm shadow-sky-200",
                   !isCurrent && isDone && "border-emerald-200 bg-emerald-50 text-emerald-700 hover:border-emerald-300",
                   !isCurrent && !isDone && "border-slate-200 bg-white text-slate-400"
@@ -59,11 +59,11 @@ export function WizardShell({
               </span>
             );
             return (
-              <li key={step.key} className="flex items-center">
+              <li key={step.key} className="flex shrink-0 items-center">
                 {i > 0 && (
                   <span
                     className={clsx(
-                      "mx-1 h-px w-3 sm:w-5",
+                      "mx-1 h-px w-3 shrink-0 sm:w-5",
                       i <= currentIndex ? "bg-sky-300" : "bg-slate-200"
                     )}
                   />

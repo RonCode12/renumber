@@ -1,7 +1,9 @@
 import {
   AD_TYPE_LABELS,
+  LEAD_COLLECTION_TYPE_LABELS,
   LOCATION_TYPE_LABELS,
   type AdType,
+  type LeadCollectionType,
 } from "@/lib/types";
 import type { FullWorkPlanRow } from "@/lib/prismaTypes";
 
@@ -20,6 +22,17 @@ export function PlanTreeView({ plan }: { plan: FullWorkPlanRow }) {
               meta={`${c.dailyBudget.toLocaleString("he-IL")} ₪/יום · ${
                 c.budgetLevel === "adset" ? "תקציב ברמת האדסט" : "תקציב ברמת הקמפיין"
               } · ${new Date(c.startAt).toLocaleDateString("he-IL")}–${new Date(c.endAt).toLocaleDateString("he-IL")}`}
+              extra={
+                c.type === "leads"
+                  ? `לידים · ${
+                      c.leadCollectionType
+                        ? LEAD_COLLECTION_TYPE_LABELS[c.leadCollectionType as LeadCollectionType]
+                        : "חסר סוג איסוף לידים"
+                    }${
+                      c.leadCollectionType === "website" ? ` · ${c.websiteUrl || "חסר קישור"}` : ""
+                    }`
+                  : undefined
+              }
             >
               {c.adsets.map((a) => (
                 <TreeAdset
@@ -144,16 +157,19 @@ function TreePlatform({
 function TreeCampaign({
   title,
   meta,
+  extra,
   children,
 }: {
   title: string;
   meta: string;
+  extra?: string;
   children: React.ReactNode;
 }) {
   return (
     <div className="rounded-lg border-r-4 border-sky-400 bg-white p-3 pr-4">
       <p className="text-sm font-bold text-slate-800">▸ קמפיין: {title || "(ללא שם)"}</p>
       <p className="mt-0.5 text-xs text-slate-500">{meta}</p>
+      {extra && <p className="mt-0.5 text-xs font-semibold text-sky-700">{extra}</p>}
       <div className="mt-2 space-y-2">{children}</div>
     </div>
   );

@@ -4,7 +4,9 @@ export type FacebookCampaignType =
   | "engagement"
   | "conversions"
   | "awareness"
-  | "traffic";
+  | "traffic"
+  | "leads";
+export type LeadCollectionType = "meta_form" | "website";
 export type LocationType = "all_israel" | "custom";
 export type AdType = "dark" | "existing_post";
 
@@ -26,6 +28,12 @@ export const FACEBOOK_CAMPAIGN_TYPE_LABELS: Record<
   conversions: "המרות",
   awareness: "מודעות",
   traffic: "טראפיק",
+  leads: "לידים",
+};
+
+export const LEAD_COLLECTION_TYPE_LABELS: Record<LeadCollectionType, string> = {
+  meta_form: "טופס לידים במטא",
+  website: "לידים לאתר / דף נחיתה",
 };
 
 export const LOCATION_TYPE_LABELS: Record<LocationType, string> = {
@@ -74,6 +82,12 @@ export interface FacebookCampaignData {
   notes: string;
   order: number;
   adsets: AdsetData[];
+  // Meta Leads only (type === "leads")
+  leadCollectionType: LeadCollectionType | "";
+  websiteUrl: string;
+  leadFormTitle: string;
+  leadFormDescription: string;
+  leadFormQuestions: string;
 }
 
 export interface TikTokCampaignData {

@@ -5,11 +5,13 @@ import {
   BUDGET_LEVEL_LABELS,
   FACEBOOK_CAMPAIGN_TYPE_LABELS,
   GOAL_LABELS,
+  LEAD_COLLECTION_TYPE_LABELS,
   LOCATION_TYPE_LABELS,
   type AdType,
   type BudgetLevel,
   type FacebookCampaignType,
   type Goal,
+  type LeadCollectionType,
 } from "@/lib/types";
 import type {
   FacebookAdRow,
@@ -56,6 +58,28 @@ export function PlanSummary({ plan }: { plan: FullWorkPlanRow }) {
                   <Row label="סוג" value={FACEBOOK_CAMPAIGN_TYPE_LABELS[c.type as FacebookCampaignType]} />
                   <Row label="תאריכים" value={`${fmt(c.startAt, true)} – ${fmt(c.endAt, true)}`} />
                 </dl>
+                {c.type === "leads" && (
+                  <div className="mt-3 rounded-lg bg-sky-50/60 p-3 text-sm">
+                    <p className="font-semibold text-sky-800">
+                      סוג איסוף לידים:{" "}
+                      {c.leadCollectionType
+                        ? LEAD_COLLECTION_TYPE_LABELS[c.leadCollectionType as LeadCollectionType]
+                        : "—"}
+                    </p>
+                    {c.leadCollectionType === "website" && c.websiteUrl && (
+                      <p className="mt-1 break-all text-xs text-sky-700">קישור: {c.websiteUrl}</p>
+                    )}
+                    {c.leadCollectionType === "meta_form" && (
+                      <div className="mt-1 space-y-1 text-xs text-sky-700">
+                        {c.leadFormTitle && <p>כותרת טופס: {c.leadFormTitle}</p>}
+                        {c.leadFormDescription && <p>תיאור: {c.leadFormDescription}</p>}
+                        {c.leadFormQuestions && (
+                          <p className="whitespace-pre-wrap">שאלות: {c.leadFormQuestions}</p>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                )}
                 <div className="mt-3 space-y-2 border-t border-slate-100 pt-3">
                   {c.adsets.map((a: FacebookAdsetRow, ai: number) => (
                     <div key={a.id} className="rounded-lg bg-slate-50 p-3">

@@ -1,12 +1,14 @@
 import { z } from "zod";
 import { TIKTOK_MIN_DAILY_BUDGET_USD } from "@/lib/types";
 
+const REQUIRED_MESSAGE = "נא למלא שדה זה";
+
 export const generalSchema = z.object({
-  name: z.string().min(1),
-  clientName: z.string().min(1),
+  name: z.string().min(1, REQUIRED_MESSAGE),
+  clientName: z.string().min(1, REQUIRED_MESSAGE),
   goal: z.enum(["monthly", "sales_day"]),
-  startDate: z.string().min(1),
-  endDate: z.string().min(1),
+  startDate: z.string().min(1, REQUIRED_MESSAGE),
+  endDate: z.string().min(1, REQUIRED_MESSAGE),
   totalBudget: z.number().positive(),
 });
 
@@ -29,21 +31,21 @@ const adSchema = z
   })
   .superRefine((ad, ctx) => {
     if (ad.adType === "dark") {
-      if (!ad.copy) ctx.addIssue({ code: "custom", path: ["copy"], message: "חובה" });
+      if (!ad.copy) ctx.addIssue({ code: "custom", path: ["copy"], message: REQUIRED_MESSAGE });
       if (!ad.headline)
-        ctx.addIssue({ code: "custom", path: ["headline"], message: "חובה" });
+        ctx.addIssue({ code: "custom", path: ["headline"], message: REQUIRED_MESSAGE });
       if (!ad.graphicLink)
-        ctx.addIssue({ code: "custom", path: ["graphicLink"], message: "חובה" });
+        ctx.addIssue({ code: "custom", path: ["graphicLink"], message: REQUIRED_MESSAGE });
     } else if (ad.adType === "existing_post") {
       if (!ad.postLink)
-        ctx.addIssue({ code: "custom", path: ["postLink"], message: "חובה" });
+        ctx.addIssue({ code: "custom", path: ["postLink"], message: REQUIRED_MESSAGE });
     }
   });
 
 const adsetSchema = z
   .object({
     id: z.string(),
-    audienceName: z.string().min(1),
+    audienceName: z.string().min(1, REQUIRED_MESSAGE),
     dailyBudget: z.number().nullable(),
     hasAgeRange: z.boolean(),
     ageRange: z.string().optional().default(""),
@@ -55,27 +57,32 @@ const adsetSchema = z
   })
   .superRefine((adset, ctx) => {
     if (adset.hasAgeRange && !adset.ageRange)
-      ctx.addIssue({ code: "custom", path: ["ageRange"], message: "חובה" });
+      ctx.addIssue({ code: "custom", path: ["ageRange"], message: REQUIRED_MESSAGE });
     if (adset.locationType === "custom" && !adset.locationDetails)
       ctx.addIssue({
         code: "custom",
         path: ["locationDetails"],
-        message: "חובה",
+        message: REQUIRED_MESSAGE,
       });
   });
 
 export const facebookCampaignSchema = z
   .object({
     id: z.string(),
-    name: z.string().min(1),
+    name: z.string().min(1, REQUIRED_MESSAGE),
     dailyBudget: z.number().positive(),
     budgetLevel: z.enum(["campaign", "adset"]),
-    startAt: z.string().min(1),
-    endAt: z.string().min(1),
-    type: z.enum(["engagement", "conversions", "awareness", "traffic"]),
+    startAt: z.string().min(1, REQUIRED_MESSAGE),
+    endAt: z.string().min(1, REQUIRED_MESSAGE),
+    type: z.enum(["engagement", "conversions", "awareness", "traffic", "leads"]),
     notes: z.string().optional().default(""),
     order: z.number(),
     adsets: z.array(adsetSchema).min(1),
+    leadCollectionType: z.enum(["meta_form", "website", ""]).optional().default(""),
+    websiteUrl: z.string().optional().default(""),
+    leadFormTitle: z.string().optional().default(""),
+    leadFormDescription: z.string().optional().default(""),
+    leadFormQuestions: z.string().optional().default(""),
   })
   .superRefine((campaign, ctx) => {
     if (campaign.budgetLevel === "adset") {
@@ -84,9 +91,20 @@ export const facebookCampaignSchema = z
           ctx.addIssue({
             code: "custom",
             path: ["adsets", i, "dailyBudget"],
-            message: "חובה",
+            message: REQUIRED_MESSAGE,
           });
       });
+    }
+    if (campaign.type === "leads") {
+      if (!campaign.leadCollectionType)
+        ctx.addIssue({ code: "custom", path: ["leadCollectionType"], message: REQUIRED_MESSAGE });
+      if (campaign.leadCollectionType === "website") {
+        if (!campaign.websiteUrl) {
+          ctx.addIssue({ code: "custom", path: ["websiteUrl"], message: REQUIRED_MESSAGE });
+        } else if (!z.string().url().safeParse(campaign.websiteUrl).success) {
+          ctx.addIssue({ code: "custom", path: ["websiteUrl"], message: "כתובת URL לא תקינה" });
+        }
+      }
     }
   });
 
@@ -97,7 +115,7 @@ export const facebookPayloadSchema = z.object({
 
 export const tiktokCampaignSchema = z.object({
   id: z.string(),
-  name: z.string().min(1),
+  name: z.string().min(1, REQUIRED_MESSAGE),
   type: z.literal("views"),
   dailyBudgetUsd: z.number().min(TIKTOK_MIN_DAILY_BUDGET_USD),
   notes: z.string().optional().default(""),
@@ -118,7 +136,7 @@ const smsSchema = z.object({
   title: z.string().optional().default(""),
   copy: z.string().optional().default(""),
   audience: z.string().optional().default(""),
-  sendAt: z.string().min(1),
+  sendAt: z.string().min(1, REQUIRED_MESSAGE),
   hasBurningCoupons: z.boolean(),
   sheetsLink: z.string().optional().default(""),
   order: z.number(),
@@ -131,7 +149,7 @@ const mailingSchema = z.object({
   audience: z.string().optional().default(""),
   imageLink: z.string().optional().default(""),
   link: z.string().optional().default(""),
-  sendAt: z.string().min(1),
+  sendAt: z.string().min(1, REQUIRED_MESSAGE),
   order: z.number(),
 });
 

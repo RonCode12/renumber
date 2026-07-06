@@ -9,6 +9,7 @@ import type {
   BudgetLevel,
   FacebookCampaignData,
   FacebookCampaignType,
+  LeadCollectionType,
   LocationType,
 } from "@/lib/types";
 import { toDateTimeLocal } from "@/lib/format";
@@ -46,6 +47,11 @@ export default async function FacebookStepPage({
     type: c.type as FacebookCampaignType,
     notes: c.notes ?? "",
     order: c.order,
+    leadCollectionType: (c.leadCollectionType as LeadCollectionType | null) ?? "",
+    websiteUrl: c.websiteUrl ?? "",
+    leadFormTitle: c.leadFormTitle ?? "",
+    leadFormDescription: c.leadFormDescription ?? "",
+    leadFormQuestions: c.leadFormQuestions ?? "",
     adsets: c.adsets.map(
       (a: FacebookAdsetRow): AdsetData => ({
         id: a.id,

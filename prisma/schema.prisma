@@ -42,9 +42,17 @@ model FacebookCampaign {
   budgetLevel  String // campaign | adset
   startAt      DateTime
   endAt        DateTime
-  type         String // engagement | conversions | awareness | traffic
+  type         String // engagement | conversions | awareness | traffic | leads
   notes        String?
   order        Int      @default(0)
+
+  // Meta Leads only (type === "leads")
+  leadCollectionType  String? // meta_form | website
+  websiteUrl          String?
+  leadFormTitle       String?
+  leadFormDescription String?
+  leadFormQuestions   String?
+
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 

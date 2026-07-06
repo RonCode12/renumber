@@ -34,6 +34,11 @@ export async function PUT(request: Request, { params }: Params) {
           type: campaign.type,
           notes: campaign.notes,
           order: campaign.order,
+          leadCollectionType: campaign.leadCollectionType || null,
+          websiteUrl: campaign.websiteUrl || null,
+          leadFormTitle: campaign.leadFormTitle || null,
+          leadFormDescription: campaign.leadFormDescription || null,
+          leadFormQuestions: campaign.leadFormQuestions || null,
           adsets: {
             create: campaign.adsets.map((adset) => ({
               audienceName: adset.audienceName,

@@ -3,9 +3,11 @@
 import {
   BUDGET_LEVEL_LABELS,
   FACEBOOK_CAMPAIGN_TYPE_LABELS,
+  LEAD_COLLECTION_TYPE_LABELS,
   type BudgetLevel,
   type FacebookCampaignData,
   type FacebookCampaignType,
+  type LeadCollectionType,
 } from "@/lib/types";
 import { Button, NumberField, RadioGroup, SelectField, TextAreaField, TextField } from "@/components/ui";
 import { createAdset } from "@/lib/factories";
@@ -105,6 +107,58 @@ export function FacebookCampaignCard({
           onChange={(v) => onChange({ budgetLevel: v as BudgetLevel })}
           options={Object.entries(BUDGET_LEVEL_LABELS).map(([v, label]) => ({ value: v, label }))}
         />
+
+        {campaign.type === "leads" && (
+          <div className="space-y-4 rounded-xl border border-sky-200/60 bg-sky-50/30 p-4">
+            <RadioGroup
+              label="סוג איסוף הלידים"
+              required
+              value={campaign.leadCollectionType}
+              onChange={(v) => onChange({ leadCollectionType: v as LeadCollectionType })}
+              options={Object.entries(LEAD_COLLECTION_TYPE_LABELS).map(([v, label]) => ({
+                value: v,
+                label,
+              }))}
+              error={errors?.leadCollectionType}
+            />
+
+            {campaign.leadCollectionType === "website" && (
+              <TextField
+                type="url"
+                label="קישור לדף הנחיתה / האתר"
+                required
+                placeholder="https://example.com/landing-page"
+                value={campaign.websiteUrl}
+                onChange={(e) => onChange({ websiteUrl: e.target.value })}
+                error={errors?.websiteUrl}
+              />
+            )}
+
+            {campaign.leadCollectionType === "meta_form" && (
+              <div className="space-y-4 rounded-xl bg-white p-4">
+                <p className="text-sm font-bold text-slate-600">פרטי טופס הלידים</p>
+                <TextField
+                  label="כותרת הטופס"
+                  value={campaign.leadFormTitle}
+                  onChange={(e) => onChange({ leadFormTitle: e.target.value })}
+                />
+                <TextAreaField
+                  label="תיאור הטופס"
+                  rows={3}
+                  value={campaign.leadFormDescription}
+                  onChange={(e) => onChange({ leadFormDescription: e.target.value })}
+                />
+                <TextAreaField
+                  label="שאלות לטופס"
+                  rows={8}
+                  placeholder={"שם מלא:\nטלפון:\nעיר מגורים:\nבאיזו שעה נוח שנחזור אליך?\nהאם יש לך ניסיון קודם?\nהערות נוספות:"}
+                  value={campaign.leadFormQuestions}
+                  onChange={(e) => onChange({ leadFormQuestions: e.target.value })}
+                />
+              </div>
+            )}
+          </div>
+        )}
 
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <TextField

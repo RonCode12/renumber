@@ -49,6 +49,11 @@ export function createFacebookCampaign(order: number): FacebookCampaignData {
     notes: "",
     order,
     adsets: [createAdset(0)],
+    leadCollectionType: "",
+    websiteUrl: "",
+    leadFormTitle: "",
+    leadFormDescription: "",
+    leadFormQuestions: "",
   };
 }
 

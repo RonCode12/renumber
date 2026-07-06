@@ -35,15 +35,15 @@ export function GeneralForm({
 
   function validate(): boolean {
     const next: Record<string, string> = {};
-    if (!value.name) next.name = "שדה חובה";
-    if (!value.clientName) next.clientName = "שדה חובה";
-    if (!value.goal) next.goal = "שדה חובה";
-    if (!value.startDate) next.startDate = "שדה חובה";
-    if (!value.endDate) next.endDate = "שדה חובה";
+    if (!value.name) next.name = "נא למלא שדה זה";
+    if (!value.clientName) next.clientName = "נא למלא שדה זה";
+    if (!value.goal) next.goal = "נא למלא שדה זה";
+    if (!value.startDate) next.startDate = "נא למלא שדה זה";
+    if (!value.endDate) next.endDate = "נא למלא שדה זה";
     if (value.startDate && value.endDate && value.endDate < value.startDate)
       next.endDate = "תאריך הסיום חייב להיות אחרי תאריך ההתחלה";
     if (!value.totalBudget || value.totalBudget <= 0)
-      next.totalBudget = "שדה חובה";
+      next.totalBudget = "נא למלא שדה זה";
     setErrors(next);
     return Object.keys(next).length === 0;
   }
