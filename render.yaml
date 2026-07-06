@@ -20,6 +20,10 @@ services:
         value: renumber
       - key: BASIC_AUTH_PASSWORD
         value: medias
+      - key: ADMIN_AUTH_USER
+        value: yon
+      - key: ADMIN_AUTH_PASSWORD
+        value: "654321"
       - key: AUTH_SESSION_SECRET
         generateValue: true
       - key: DATABASE_URL
